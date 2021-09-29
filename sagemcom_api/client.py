@@ -288,6 +288,20 @@ class SagemcomClient:
         else:
             raise UnauthorizedException(data)
 
+    async def logout(self):
+        """TODO."""
+        actions = {
+            "method": "logOut",
+            "id": 0,
+        }
+
+        try:
+            response = await self.__api_request_async([actions], True)
+        except asyncio.TimeoutError as exception:
+            raise LoginTimeoutException(
+                "Request timed-out. This is mainly due to using the wrong encryption method."
+            ) from exception
+
     async def get_value_by_xpath(
         self, xpath: str, options: Optional[Dict] = {}
     ) -> Dict:
